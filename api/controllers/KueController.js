@@ -16,7 +16,7 @@ var hook_view_dir = '/../node_modules/sails-hook-kue-admin/views';
 
 module.exports = {
 	index:function(req,res){
-		var job_types=['index_urls','crawl_url_twitter','send_email','getUrlsFromGoogleSearch','runSpider'];
+		var job_types=_.uniq(sails.config.kue_admin?sails.config.kue_admin.job_types:[]);
 		var job_stats=[];
 		async.eachLimit(job_types,1,function(job_type,next){
 			async.auto({
