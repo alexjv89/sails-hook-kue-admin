@@ -95,7 +95,11 @@ module.exports = {
 					job.created_at=GeneralService.timeAgo(parseInt(job.created_at));
 					job.updated_at=GeneralService.timeAgo(parseInt(job.updated_at));
 				})
-				sails.hooks.views.render(hook_view_dir+'/kue/list_items',{jobs:jobs},function(err,html){
+				var locals={
+					req:req,
+					jobs:jobs,
+				}
+				sails.hooks.views.render(hook_view_dir+'/kue/list_items',locals,function(err,html){
 					if(err)
 						throw err;
 					res.send(html);
@@ -111,7 +115,11 @@ module.exports = {
 					job.created_at=GeneralService.timeAgo(parseInt(job.created_at));
 					job.updated_at=GeneralService.timeAgo(parseInt(job.updated_at));
 				})
-				sails.hooks.views.render(hook_view_dir+'/kue/list_items',{jobs:jobs},function(err,html){
+				var locals={
+					req:req,
+					jobs:jobs,
+				}
+				sails.hooks.views.render(hook_view_dir+'/kue/list_items',locals,function(err,html){
 					if(err)
 						throw err;
 					res.send(html);
