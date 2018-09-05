@@ -1,12 +1,9 @@
-<%
-	const JSON = require('circular-json');
-%>
 <div>
 	<br><br><br>
 	<div class='ui container'>
 	 
 			
-		<h3>Items in kue - <%=req.params.state%></h3>
+		<h3>Items in kue - <%=state%></h3>
 		<table class="ui celled structured table">
 			<thead>
 				<tr>
@@ -28,8 +25,8 @@
 						<td><a href="" class='job_id' data-id='<%=job.id%>'><%=job.id%></a></td>
 
 						<td><%-job.data.title.substring(0,150)%></td>
-						<td><%=JSON.parse(JSON.stringify(job)).progress%></td>
-						<td><%=JSON.parse(JSON.stringify(job)).state%></td>
+						<td><%=job.progress%></td>
+						<td><%=job.state%></td>
 						<!-- <td></td> -->
 						<td><%=job.created_at%></td>
 						<td><%=job.updated_at%></td>
@@ -48,7 +45,6 @@
 					<tr id='json_<%=job.id%>' style='display: none;'>
 						<td colspan='8'>
 							 <pre><%=JSON.stringify(job,null,4)%> </pre>
-								
 						</td>
 					</tr>
 				<%})%>

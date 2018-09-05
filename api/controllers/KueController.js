@@ -6,6 +6,7 @@
  */
 var kue = require( 'kue' );
 var async = require('async');
+
  // create our job queue
 
 var queue = kue.createQueue({
@@ -81,6 +82,7 @@ module.exports = {
 		
 	},
 	listItemsInKue:function(req,res){
+		var JSON = require('circular-json');
 		var n = req.query.n?req.query.n:30;
 		var page = req.query.page?req.query.page:1;
 		var state = req.params.state?req.params.state:'active'
@@ -91,13 +93,17 @@ module.exports = {
 			return res.send('invalid state');
 		if(req.query.job_type){
 			kue.Job.rangeByType( req.query.job_type, req.params.state, start, end, order_by, function( err, jobs ) {
+				var new_jobs=[];
 				jobs.forEach(function(job){
-					job.created_at=GeneralService.timeAgo(parseInt(job.created_at));
-					job.updated_at=GeneralService.timeAgo(parseInt(job.updated_at));
+					var nj=JSON.parse(JSON.stringify(job));
+					nj.created_at=GeneralService.timeAgo(parseInt(job.created_at));
+					nj.updated_at=GeneralService.timeAgo(parseInt(job.updated_at));
+					new_jobs.push(nj);
 				})
 				var locals={
+					state:req.params.state,
 					req:req,
-					jobs:jobs,
+					jobs:new_jobs,
 				}
 				sails.hooks.views.render(hook_view_dir+'/kue/list_items',locals,function(err,html){
 					if(err)
@@ -111,13 +117,17 @@ module.exports = {
 		}else{
 
 			kue.Job.rangeByState( req.params.state, start, end, order_by, function( err, jobs ) {
+				var new_jobs=[];
 				jobs.forEach(function(job){
-					job.created_at=GeneralService.timeAgo(parseInt(job.created_at));
-					job.updated_at=GeneralService.timeAgo(parseInt(job.updated_at));
+					var nj=JSON.parse(JSON.stringify(job));
+					nj.created_at=GeneralService.timeAgo(parseInt(job.created_at));
+					nj.updated_at=GeneralService.timeAgo(parseInt(job.updated_at));
+					new_jobs.push(nj);
 				})
 				var locals={
+					state:req.params.state,
 					req:req,
-					jobs:jobs,
+					jobs:new_jobs,
 				}
 				sails.hooks.views.render(hook_view_dir+'/kue/list_items',locals,function(err,html){
 					if(err)
