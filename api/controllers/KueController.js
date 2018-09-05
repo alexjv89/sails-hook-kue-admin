@@ -71,7 +71,11 @@ module.exports = {
 					job_stats:job_stats,
 					overall_stats:results,
 				}
-				res.view(hook_view_dir+'/kue/index',locals);
+				sails.hooks.views.render(hook_view_dir+'/kue/index',locals,function(err,html){
+					if(err)
+						throw err;
+					res.send(html);
+				});
 			})
 		});
 		
@@ -91,7 +95,12 @@ module.exports = {
 					job.created_at=GeneralService.timeAgo(parseInt(job.created_at));
 					job.updated_at=GeneralService.timeAgo(parseInt(job.updated_at));
 				})
-				res.view(hook_view_dir+'/kue/list_items',{jobs:jobs});
+				sails.hooks.views.render(hook_view_dir+'/kue/list_items',{jobs:jobs},function(err,html){
+					if(err)
+						throw err;
+					res.send(html);
+				});
+				// res.view(hook_view_dir+'/kue/list_items',{jobs:jobs});
 				// res.send({jobs:jobs});
 			  // you have an array of maximum n Job objects here
 			});	
@@ -102,7 +111,12 @@ module.exports = {
 					job.created_at=GeneralService.timeAgo(parseInt(job.created_at));
 					job.updated_at=GeneralService.timeAgo(parseInt(job.updated_at));
 				})
-				res.view(hook_view_dir+'/kue/list_items',{jobs:jobs});
+				sails.hooks.views.render(hook_view_dir+'/kue/list_items',{jobs:jobs},function(err,html){
+					if(err)
+						throw err;
+					res.send(html);
+				});
+				// res.view(hook_view_dir+'/kue/list_items',{jobs:jobs});
 				// res.send({jobs:jobs});
 			  // you have an array of maximum n Job objects here
 			});
