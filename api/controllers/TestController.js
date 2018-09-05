@@ -18,11 +18,11 @@ module.exports = {
 			var locals={
 				// stats:result.value
 			}
-			sails.hooks.views.render('/../api/hooks/kue-controller/views/sample',{},function(err,html){
+			sails.hooks.views.render('/../node_modules/sails-hook-kue-admin/views/sample',{},function(err,html){
 				
 				console.log(__dirname);
 				console.log(err);
-				console.log(html);
+				// console.log(html);
 				res.send(html);
 			});
 		
