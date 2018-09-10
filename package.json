@@ -1,6 +1,6 @@
 {
   "name": "sails-hook-kue-admin",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Kue admin specifically designed for sailjs. This uses semantic-ui as css framework ",
   "main": "index.js",
   "scripts": {
